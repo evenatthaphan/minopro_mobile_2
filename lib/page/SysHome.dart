@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_minipro2/page/login.dart';
+import 'package:flutter_minipro2/page/user/register_user.dart';
 
 class SystemHomePage extends StatefulWidget {
   const SystemHomePage({super.key});
@@ -13,11 +15,11 @@ class _SystemHomePageState extends State<SystemHomePage> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(),
       body: Stack(children: [
         Positioned.fill(
             child: Padding(
-              padding: EdgeInsets.only(bottom: screenSize.height*0.45),
+              padding: EdgeInsets.only(bottom: screenSize.height*0.54),
               child: Container(
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 247, 182, 254),
@@ -81,9 +83,7 @@ class _SystemHomePageState extends State<SystemHomePage> {
               Column(
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      // Add login functionality
-                    },
+                    onPressed: login,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple[900], // Background color
                       padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
@@ -98,9 +98,7 @@ class _SystemHomePageState extends State<SystemHomePage> {
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {
-                      // Add register functionality
-                    },
+                    onPressed: register,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple[100], // Background color
                       padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
@@ -119,6 +117,24 @@ class _SystemHomePageState extends State<SystemHomePage> {
           ),
         ),
       ]),
+    );
+  }
+
+  void login() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginPage(),
+      ),
+    );
+  }
+
+  void register() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const RegirterPage(),
+      ),
     );
   }
 }
