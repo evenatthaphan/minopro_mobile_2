@@ -8,6 +8,12 @@ class RegirterPage extends StatefulWidget {
 }
 
 class _RegirterPageState extends State<RegirterPage> {
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController wallet = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -16,8 +22,8 @@ class _RegirterPageState extends State<RegirterPage> {
         //   automaticallyImplyLeading: false,  // ซ่อนลูกศรชี้กลับ
         //   ),
         body: SingleChildScrollView(
-          child: Stack(
-                children: [
+      child: Stack(
+        children: [
           SizedBox(
             width: screenSize.width * 1, // ขยายความกว้างของ Card
             height: screenSize.height * 0.25, // ขยายความสูงของ Card
@@ -25,23 +31,40 @@ class _RegirterPageState extends State<RegirterPage> {
               color: Color.fromARGB(255, 247, 182, 254),
               child: Container(
                 child: Padding(
-                  padding: EdgeInsets.only(top: screenSize.height * 0.05,
-                  left: screenSize.width * 0.05),
+                  padding: EdgeInsets.only(
+                      top: screenSize.height * 0.05,
+                      left: screenSize.width * 0.05),
                   child: Row(
                     children: [
                       SizedBox(
-                          child: Image.asset(
-                            'assets/images/user.png',
-                            width: screenSize.width * 0.3,
-                          ),
+                        child: Image.asset(
+                          'assets/images/user.png',
+                          width: screenSize.width * 0.3,
                         ),
-                      Text(
-                          "ลงทะเบียนผู้ใช้",
-                          style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.purple,
-                              fontWeight: FontWeight.bold),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: screenSize.width * 0.05),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "ผู้ใช้ทั่วไป",
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.purple[400],
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const Text(
+                              "ลงทะเบียนผู้ใช้",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
+                      ),
                     ],
                   ),
                 ),
@@ -49,12 +72,149 @@ class _RegirterPageState extends State<RegirterPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: screenSize.height * 0.26),
-            child: Center(),
-          )
+              padding: EdgeInsets.only(top: screenSize.height * 0.26,
+              left: screenSize.width*0.05, right: screenSize.width*0.05),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('ชื่อ-สกุล : '),
+                  TextField(
+                    controller: name,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                        ),
+                      ),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 247, 182, 254),
+                            width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: screenSize.height * 0.02),
+                    child: const Text('อีเมลล์ : '),
+                  ),
+                  TextField(
+                    controller: email,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                        ),
+                      ),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 247, 182, 254),
+                            width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: screenSize.height * 0.02),
+                    child: const Text('เบอร์โทรศัพท์ : '),
+                  ),
+                  TextField(
+                    maxLength: 10,
+                    controller: phone,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                        ),
+                      ),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 247, 182, 254),
+                            width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: screenSize.height * 0.02),
+                    child: const Text('รหัสผ่าน : '),
+                  ),
+                  TextField(
+                    controller: password,
+                    // obscureText:
+                    //     !_isPasswordVisible, // This line only needs to appear once
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 247, 182, 254),
+                            width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // _isPasswordVisible
+                          //     ? Icons.visibility
+                          Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          // setState(() {
+                          //   _isPasswordVisible = !_isPasswordVisible;
+                          // });
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: screenSize.height * 0.02),
+                    child: const Text('ยืนยันรหัสผ่าน : '),
+                  ),
+                  SizedBox(height: screenSize.height * 0.015),
+                  TextField(
+                    // controller: confirmPassword,
+                    // obscureText:
+                    //     !_isPasswordVisible1, // This line only needs to appear once
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 247, 182, 254),
+                            width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // _isPasswordVisible1
+                          //     ? Icons.visibility
+                          Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            // _isPasswordVisible1 = !_isPasswordVisible1;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
                 ],
-              ),
-        ));
+              ))
+        ],
+      ),
+    ));
   }
 
   void registeruser() {}
