@@ -72,143 +72,176 @@ class _RegirterPageState extends State<RegirterPage> {
             ),
           ),
           Padding(
-              padding: EdgeInsets.only(top: screenSize.height * 0.26,
-              left: screenSize.width*0.05, right: screenSize.width*0.05),
+              padding: EdgeInsets.only(
+                  top: screenSize.height * 0.26,
+                  left: screenSize.width * 0.05,
+                  right: screenSize.width * 0.05),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('ชื่อ-สกุล : '),
-                  TextField(
-                    controller: name,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 1,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                          width:
+                              screenSize.width * 0.5, // ขยายความกว้างของ Card
+                          height:
+                              screenSize.height * 0.2, // ขยายความสูงของ Card
+                          child: Card.outlined()),
+                      ElevatedButton(
+                        onPressed: choosePhotos,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.purple[900], // Background color
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: const Text(
+                          'เลือกภาพจากแกลอรี่',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color.fromARGB(255, 247, 182, 254),
-                            width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
-                      ),
-                    ),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(top: screenSize.height * 0.02),
-                    child: const Text('อีเมลล์ : '),
-                  ),
-                  TextField(
-                    controller: email,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 1,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('ชื่อ-สกุล : '),
+                      TextField(
+                        controller: name,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                            ),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 247, 182, 254),
+                                width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                          ),
                         ),
                       ),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color.fromARGB(255, 247, 182, 254),
-                            width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                      Padding(
+                        padding: EdgeInsets.only(top: screenSize.height * 0.02),
+                        child: const Text('อีเมลล์ : '),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: screenSize.height * 0.02),
-                    child: const Text('เบอร์โทรศัพท์ : '),
-                  ),
-                  TextField(
-                    maxLength: 10,
-                    controller: phone,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 1,
+                      TextField(
+                        controller: email,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                            ),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 247, 182, 254),
+                                width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                          ),
                         ),
                       ),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color.fromARGB(255, 247, 182, 254),
-                            width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                      Padding(
+                        padding: EdgeInsets.only(top: screenSize.height * 0.02),
+                        child: const Text('เบอร์โทรศัพท์ : '),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: screenSize.height * 0.02),
-                    child: const Text('รหัสผ่าน : '),
-                  ),
-                  TextField(
-                    controller: password,
-                    // obscureText:
-                    //     !_isPasswordVisible, // This line only needs to appear once
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 1,
+                      TextField(
+                        maxLength: 10,
+                        controller: phone,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                            ),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 247, 182, 254),
+                                width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                          ),
                         ),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 10),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color.fromARGB(255, 247, 182, 254),
-                            width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                      Padding(
+                        padding: EdgeInsets.only(top: screenSize.height * 0.02),
+                        child: const Text('รหัสผ่าน : '),
                       ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          // _isPasswordVisible
-                          //     ? Icons.visibility
-                          Icons.visibility_off,
+                      TextField(
+                        controller: password,
+                        // obscureText:
+                        //     !_isPasswordVisible, // This line only needs to appear once
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 247, 182, 254),
+                                width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // _isPasswordVisible
+                              //     ? Icons.visibility
+                              Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              // setState(() {
+                              //   _isPasswordVisible = !_isPasswordVisible;
+                              // });
+                            },
+                          ),
                         ),
-                        onPressed: () {
-                          // setState(() {
-                          //   _isPasswordVisible = !_isPasswordVisible;
-                          // });
-                        },
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: screenSize.height * 0.02),
-                    child: const Text('ยืนยันรหัสผ่าน : '),
-                  ),
-                  SizedBox(height: screenSize.height * 0.015),
-                  TextField(
-                    // controller: confirmPassword,
-                    // obscureText:
-                    //     !_isPasswordVisible1, // This line only needs to appear once
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 1,
+                      Padding(
+                        padding: EdgeInsets.only(top: screenSize.height * 0.02),
+                        child: const Text('ยืนยันรหัสผ่าน : '),
+                      ),
+                      SizedBox(height: screenSize.height * 0.015),
+                      TextField(
+                        // controller: confirmPassword,
+                        // obscureText:
+                        //     !_isPasswordVisible1, // This line only needs to appear once
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 247, 182, 254),
+                                width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // _isPasswordVisible1
+                              //     ? Icons.visibility
+                              Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                // _isPasswordVisible1 = !_isPasswordVisible1;
+                              });
+                            },
+                          ),
                         ),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 10),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color.fromARGB(255, 247, 182, 254),
-                            width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          // _isPasswordVisible1
-                          //     ? Icons.visibility
-                          Icons.visibility_off,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            // _isPasswordVisible1 = !_isPasswordVisible1;
-                          });
-                        },
-                      ),
-                    ),
+                    ],
                   ),
                 ],
               ))
@@ -220,4 +253,6 @@ class _RegirterPageState extends State<RegirterPage> {
   void registeruser() {}
 
   void registerrider() {}
+
+  void choosePhotos() {}
 }
