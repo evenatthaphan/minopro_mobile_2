@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_minipro2/page/choose_register.dart';
+import 'package:flutter_minipro2/page/user/HomepageUser.dart';
 import 'package:flutter_minipro2/page/user/register_user.dart';
+import 'package:flutter_minipro2/page/user/sender/HmoePageSender.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -218,13 +221,20 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void loginUser() {}
+  void loginUser() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomePageUser(),
+      ),
+    );
+  }
 
   void register() {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const RegirterPage(),
+        builder: (context) => const ChooseRegisterPage(),
       ),
     );
   }

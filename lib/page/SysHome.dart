@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_minipro2/page/choose_register.dart';
 import 'package:flutter_minipro2/page/login.dart';
 import 'package:flutter_minipro2/page/user/register_user.dart';
 
@@ -125,7 +126,7 @@ class _SystemHomePageState extends State<SystemHomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const RegirterPage(),
+        builder: (context) => const ChooseRegisterPage(),
       ),
     );
   }

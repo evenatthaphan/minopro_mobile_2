@@ -32,7 +32,7 @@ class UserNavbarPage extends StatelessWidget {
           ),
         ),
         child: NavigationBar(
-          backgroundColor: const Color.fromRGBO(249, 85, 85, 1),
+          backgroundColor: const Color.fromARGB(255, 185, 121, 250),
           selectedIndex: selectedIndex,
           onDestinationSelected: (int index) {
             onDestinationSelected(index); // Call the passed function
@@ -53,9 +53,9 @@ class UserNavbarPage extends StatelessWidget {
           destinations: const [
             NavigationDestination(icon: Icon(Icons.home), label: "หน้าแรก"),
             NavigationDestination(
-                icon: Icon(Icons.home), label: "สถานะ"),
+                icon: Icon(Icons.settings_backup_restore_rounded), label: "สถานะ"),
             NavigationDestination(
-                icon: Icon(Icons.home), label: "รอไรด์เดอร์"),
+                icon: Icon(Icons.watch_later_outlined), label: "รอไรด์เดอร์"),
           ],
         ),
       ),
