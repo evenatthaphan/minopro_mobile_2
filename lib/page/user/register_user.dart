@@ -92,7 +92,7 @@ class _RegirterPageState extends State<RegirterPage> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               Colors.purple[900], // Background color
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
@@ -192,7 +192,7 @@ class _RegirterPageState extends State<RegirterPage> {
                                 width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
                           ),
                           suffixIcon: IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               // _isPasswordVisible
                               //     ? Icons.visibility
                               Icons.visibility_off,
@@ -228,7 +228,7 @@ class _RegirterPageState extends State<RegirterPage> {
                                 width: 2), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
                           ),
                           suffixIcon: IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               // _isPasswordVisible1
                               //     ? Icons.visibility
                               Icons.visibility_off,
