@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_minipro2/page/user/sender/insertProduct.dart';
 import 'package:flutter_minipro2/page/user/sender/navbar_sender.dart';
 
 class HomePageSender extends StatefulWidget {
@@ -9,6 +10,7 @@ class HomePageSender extends StatefulWidget {
 }
 
 class _HomePageSenderState extends State<HomePageSender> {
+  int selectedItems = 0;
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -132,7 +134,9 @@ class _HomePageSenderState extends State<HomePageSender> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: FilledButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        selectedItems++;
+                                      },
                                       style: ButtonStyle(
                                         backgroundColor:
                                             WidgetStateProperty.all<Color>(
@@ -155,7 +159,35 @@ class _HomePageSenderState extends State<HomePageSender> {
                     )
                   ],
                 ),
-              )
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: screenSize.height * 0.84),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: screenSize.width * 0.9,
+                          child: FilledButton(
+                            onPressed: insert,
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all<Color>(
+                                  const Color.fromARGB(255, 88, 3, 107)),
+                            ),
+                            child: Text(
+                              'เพิ่มสินค้า',
+                              style:
+                                  TextStyle(fontSize: screenSize.width * 0.04),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -164,5 +196,14 @@ class _HomePageSenderState extends State<HomePageSender> {
           onDestinationSelected: (value) {},
           screenSize: screenSize,
         ));
+  }
+
+  void insert() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const insertProductPage(),
+      ),
+    );
   }
 }
