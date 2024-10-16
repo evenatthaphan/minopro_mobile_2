@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_minipro2/page/user/sender/HmoePageSender.dart';
+import 'package:flutter_minipro2/page/user/sender/Senproduct.dart';
 
 
 class UserNavbarPage extends StatelessWidget {
@@ -62,9 +64,23 @@ class UserNavbarPage extends StatelessWidget {
     );
   }
   
-  void navigateHomePageSender(BuildContext context) {}
+  void navigateHomePageSender(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomePageSender(),
+      ),
+    );
+  }
   
-  void navigateWaitPageSender(BuildContext context) {}
+  void navigateWaitPageSender(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Senproduct(),
+      ),
+    );
+  }
   
   void navigateStatusPageSender(BuildContext context) {}
 }
