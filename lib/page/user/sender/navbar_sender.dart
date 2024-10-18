@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_minipro2/page/user/sender/HmoePageSender.dart';
 import 'package:flutter_minipro2/page/user/sender/Senproduct.dart';
+import 'package:flutter_minipro2/page/user/sender/ProductPageSender.dart';
 
 
 class UserNavbarPage extends StatelessWidget {
@@ -74,12 +75,7 @@ class UserNavbarPage extends StatelessWidget {
   }
   
   void navigateWaitPageSender(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const Senproduct(),
-      ),
-    );
+    
   }
   
   void navigateStatusPageSender(BuildContext context) {}

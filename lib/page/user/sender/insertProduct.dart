@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_minipro2/page/user/sender/Senproduct.dart';
 import 'package:flutter_minipro2/page/user/sender/navbar_sender.dart';
 
 class insertProductPage extends StatefulWidget {
@@ -157,6 +158,20 @@ class _insertProductPageState extends State<insertProductPage> {
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.only(top: screenSize.height * 0.01),
+                child: FilledButton(
+                  onPressed: next,
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all<Color>(
+                        const Color.fromARGB(151, 69, 7, 117)),
+                  ),
+                  child: Text(
+                    'ถัดไป',
+                    style: TextStyle(fontSize: screenSize.width * 0.04),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -211,6 +226,15 @@ class _insertProductPageState extends State<insertProductPage> {
             )),
           )
         ],
+      ),
+    );
+  }
+
+  void next() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Senproduct(),
       ),
     );
   }
