@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_minipro2/page/choose_register.dart';
 import 'package:flutter_minipro2/page/user/HomepageUser.dart';
 import 'package:flutter_minipro2/page/user/register_user.dart';
-import 'package:flutter_minipro2/page/user/sender/HmoePageSender.dart';
+import 'package:flutter_minipro2/page/user/sender/HomePageSender.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

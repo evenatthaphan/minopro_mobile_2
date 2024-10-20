@@ -241,6 +241,60 @@ class _RegirterPageState extends State<RegirterPage> {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(top: screenSize.height * 0.03),
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.purple,
+                                shape: const CircleBorder(),
+                                padding: const EdgeInsets.all(10),
+                              ),
+                              child: Text("GPS",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white)),
+                            ),
+                            const Expanded(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: 0.5,
+                                    ),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 247, 182, 254),
+                                        width:
+                                            1), // เปลี่ยนขอบเป็นสีแดงเมื่อคลิก
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: screenSize.height * 0.05),
+                          child: FilledButton(
+                            onPressed: regis,
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all<Color>(
+                                  const Color.fromARGB(255, 3, 103, 18)),
+                            ),
+                            child: Text(
+                              'สมัครสมาชิก',
+                              style: TextStyle(fontSize: screenSize.width * 0.04),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -255,4 +309,7 @@ class _RegirterPageState extends State<RegirterPage> {
   void registerrider() {}
 
   void choosePhotos() {}
+
+  void regis() {
+  }
 }

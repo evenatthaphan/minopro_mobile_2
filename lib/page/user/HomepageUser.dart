@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_minipro2/page/user/profilepage.dart';
 import 'package:flutter_minipro2/page/user/receiver/HomePageRecive.dart';
-import 'package:flutter_minipro2/page/user/sender/HmoePageSender.dart';
+import 'package:flutter_minipro2/page/user/sender/HomePageSender.dart';
 
 class HomePageUser extends StatefulWidget {
   const HomePageUser({super.key});
