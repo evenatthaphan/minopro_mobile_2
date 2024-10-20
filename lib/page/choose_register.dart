@@ -141,7 +141,7 @@ class _ChooseRegisterPageState extends State<ChooseRegisterPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const RegirterPage(),
+        builder: (context) => const RegisterPage(),
       ),
     );
   }
