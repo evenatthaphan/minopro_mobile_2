@@ -17,6 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController passwordCtl = TextEditingController();
   TextEditingController phoneCtl = TextEditingController();
   TextEditingController confirmPasswordCtl = TextEditingController();
+  TextEditingController gpsCtl = TextEditingController();
   File? image;
   LatLng? latLng;
   bool isLoading = false;
@@ -215,14 +216,16 @@ class _RegisterPageState extends State<RegisterPage> {
             child: const Text("GPS",
                 style: TextStyle(fontSize: 16, color: Colors.white)),
           ),
-          const Expanded(
+          const SizedBox(width: 10), // Add some space between button and text field
+          Expanded(
             child: TextField(
-              enabled: false,
+              controller: gpsCtl, // Use the new GPS controller
+              enabled: false, // Keep it disabled as it's for display only
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                focusedBorder: OutlineInputBorder(
+                border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 10, horizontal: 10),
+                focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Color.fromARGB(255, 247, 182, 254),
                     width: 1,
@@ -312,6 +315,8 @@ class _RegisterPageState extends State<RegisterPage> {
       var position = await _determinePosition();
       setState(() {
         latLng = LatLng(position.latitude, position.longitude);
+        // Update the GPS TextField with coordinates
+        gpsCtl.text = '${position.latitude}, ${position.longitude}';
       });
 
       // Show the dialog with coordinates
