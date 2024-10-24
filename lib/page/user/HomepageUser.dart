@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_minipro2/config/shared/app_data.dart';
 import 'package:flutter_minipro2/page/user/profilepage.dart';
+import 'package:flutter_minipro2/page/user/receiver/Home.dart';
 import 'package:flutter_minipro2/page/user/receiver/HomePageRecive.dart';
 import 'package:flutter_minipro2/page/user/sender/HomePageSender.dart';
 import 'package:provider/provider.dart';
@@ -221,7 +222,7 @@ class _HomePageUserState extends State<HomePageUser> {
   void registeruser() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const HomePagerecive()),
+      MaterialPageRoute(builder: (context) => const HomePageReceiver()),
     );
   }
 
