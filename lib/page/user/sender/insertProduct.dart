@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_minipro2/config/shared/app_data.dart';
+import 'package:flutter_minipro2/page/model/response/additim_res.dart';
 import 'package:flutter_minipro2/page/model/response/getUser_res.dart';
 import 'package:flutter_minipro2/page/user/sender/Senproduct.dart';
 import 'package:flutter_minipro2/page/user/sender/navbar_sender.dart';
+import 'package:provider/provider.dart';
 
 class insertProductPage extends StatefulWidget {
   final String id;
@@ -12,12 +17,37 @@ class insertProductPage extends StatefulWidget {
 }
 
 class _insertProductPageState extends State<insertProductPage> {
+  File? _image;
+  String? _imageUrl;
+  String? getOrder_id;
+  TextEditingController detailNoCtl = TextEditingController();
+
+  List<GetUsersRes> getUsers = []; // ตัวแปรเก็บข้อมูลจาก API
+  List<GetAddItemRes> getAdd_item = [];
+  late Future<void> loadData;
+  late UserProfile user;
+
+  @override
+  void initState() {
+    super.initState();
+    user = context.read<AppData>().user;
+
+    // loadData = getMemberbyID(widget.id);
+    // order(widget.id);
+  }
   
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+          title: const Text(
+            'เพิ่มสินค้า',
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          ),
         body: SingleChildScrollView(
           child: Column(
             children: [
