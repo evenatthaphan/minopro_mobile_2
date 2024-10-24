@@ -1,4 +1,7 @@
+import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_minipro2/page/model/response/getUser_res.dart';
 import 'package:flutter_minipro2/page/user/sender/insertProduct.dart';
 import 'package:flutter_minipro2/page/user/sender/navbar_sender.dart';
 
@@ -11,52 +14,70 @@ class HomePageSender extends StatefulWidget {
 
 class _HomePageSenderState extends State<HomePageSender> {
   int selectedItems = 0;
+  TextEditingController phoneNoCtl = TextEditingController();
+  List<GetUsersRes> users = []; // List to display
+  List<GetUsersRes> allUsers = []; // List to hold all users
+  String _userNoResultMessage = '';
+  late Future<void> loadData;
+
+  @override
+  void initState() {
+    super.initState();
+    loadData = getMember(); // Load all users initially
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
-        body: SingleChildScrollView(
-          child: Stack(
-            children: [
-              SizedBox(
-                width: screenSize.width, // ขยายความกว้างของ Card
-                height: screenSize.height * 0.25, // ขยายความสูงของ Card
-                child: Card(
-                  color: Color.fromARGB(255, 185, 121, 250),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: screenSize.height * 0.07,
-                    ),
-                    child: Container(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: screenSize.width * 0.10,
-                          right: screenSize.width * 0.10,
-                          top: screenSize.height * 0.02,
-                        ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            filled: true, // Enables the fill color
-                            fillColor:
-                                Colors.white, // Sets the fill color to white
-                            hintText: 'ค้นหาผู้รับ', // Placeholder text
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide(width: 1),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromRGBO(108, 3, 104, 1),
-                                  width: 2),
-                            ),
-                            suffixIcon: IconButton(
-                              icon: const Icon(
-                                Icons.search,
+      appBar: AppBar(
+        title: const Text(
+          'ค้นหาผู้รับ',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: FutureBuilder<void>(
+        future: loadData,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  width: screenSize.width,
+                  height: screenSize.height * 0.25,
+                  child: Card.outlined(
+                    color: Color.fromARGB(255, 185, 121, 250),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: screenSize.height * 0.07,
+                      ),
+                      child: Container(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: screenSize.width * 0.10,
+                            right: screenSize.width * 0.10,
+                            top: screenSize.height * 0.02,
+                          ),
+                          child: TextField(
+                            controller: phoneNoCtl,
+                            onChanged: (value) {
+                              _searchUsers(value); // Search as user types
+                            },
+                            keyboardType: TextInputType.phone,
+                            decoration: InputDecoration(
+                              hintText: 'ค้นหาด้วยหมายเลขโทรศัพท์',
+                              filled: true,
+                              fillColor: const Color.fromARGB(255, 255, 255, 255),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
                               ),
-                              onPressed: () {
-                                setState(() {
-                                  // Handle search logic
-                                });
-                              },
                             ),
                           ),
                         ),
@@ -64,146 +85,133 @@ class _HomePageSenderState extends State<HomePageSender> {
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: screenSize.height * 0.25,
-                    left: screenSize.width * 0.05),
-                child: Column(
-                  children: [
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'ผลการค้นหา :',
-                          style: TextStyle(
+                Padding(
+                  padding: EdgeInsets.only(left: screenSize.width * 0.05),
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'ผลการค้นหา :',
+                            style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Colors.purple),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        SizedBox(
-                          width: screenSize.width, // ขยายความกว้างของ Card
-                          height: screenSize.height * 0.13,
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              right: screenSize.width * 0.05,
-                              top: screenSize.height * 0.02,
+                              color: Colors.purple,
                             ),
-                            child: Card.outlined(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/profile.png',
-                                        width: screenSize.width * 0.25,
-                                      ),
-                                      const Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'น้องแม็ก',
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black),
-                                            ),
-                                            Text(
-                                              '0254718963',
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.purple),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                          ),
+                        ],
+                      ),
+                      if (users.isEmpty) // Show message if no users found
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            _userNoResultMessage.isEmpty
+                                ? 'ไม่พบผู้ใช้ที่ค้นหา'
+                                : _userNoResultMessage,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      Column(
+                        children: [
+                          SizedBox(
+                            width: screenSize.width,
+                            height: screenSize.height * 0.5,
+                            child: ListView.builder(
+                              itemCount: users.length,
+                              itemBuilder: (context, index) {
+                                final user = users[index];
+                                return Card.outlined(
+                                  margin: const EdgeInsets.symmetric(vertical: 8),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: FilledButton(
-                                      onPressed: () {
-                                        selectedItems++;
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            WidgetStateProperty.all<Color>(
-                                                const Color.fromARGB(
-                                                    255, 202, 127, 218)),
+                                  child: ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundImage: user.image.isNotEmpty
+                                          ? NetworkImage(user.image)
+                                          : const AssetImage(
+                                                  'assets/images/profile.jpg')
+                                              as ImageProvider,
+                                    ),
+                                    title: Text('Name: ${user.name}'),
+                                    subtitle: Text('Phone: ${user.phone}'),
+                                    trailing: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.green[300],
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      child: Text(
-                                        'เลือก',
-                                        style: TextStyle(
-                                            fontSize: screenSize.width * 0.04),
+                                      child: IconButton(
+                                        icon: const Icon(Icons.arrow_forward),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  insertProductPage(id: user.id),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
+                                );
+                              },
                             ),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: screenSize.height * 0.84),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: screenSize.width * 0.9,
-                          child: FilledButton(
-                            onPressed: insert,
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all<Color>(
-                                  const Color.fromARGB(255, 88, 3, 107)),
-                            ),
-                            child: Text(
-                              'เพิ่มสินค้า',
-                              style:
-                                  TextStyle(fontSize: screenSize.width * 0.04),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        bottomNavigationBar: UserNavbarPage(
-          selectedIndex: 0,
-          onDestinationSelected: (value) {},
-          screenSize: screenSize,
-        ));
-  }
-
-  void insert() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const insertProductPage(),
+              ],
+            ),
+          );
+        },
+      ),
+      bottomNavigationBar: UserNavbarPage(
+        selectedIndex: 0,
+        onDestinationSelected: (value) {},
+        screenSize: screenSize,
       ),
     );
+  }
+
+  Future<void> getMember() async {
+    try {
+      // Fetch all users from Firestore where type is 'user'
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('type', isEqualTo: 'user')
+          .get();
+
+      // Convert Firestore documents to List<GetUsersRes>
+      allUsers = getUsersResFromQuerySnapshot(querySnapshot);
+
+      setState(() {
+        users = allUsers; // Initially show all users
+        _userNoResultMessage = users.isEmpty ? "ไม่มีผู้ใช้ที่จะแสดง" : '';
+      });
+    } catch (e) {
+      log('Error fetching users: $e');
+    }
+  }
+
+  void _searchUsers(String query) {
+    if (query.isEmpty) {
+      // If search query is empty, show all users
+      setState(() {
+        users = allUsers;
+        _userNoResultMessage = users.isEmpty ? "ไม่มีผู้ใช้ที่จะแสดง" : '';
+      });
+    } else {
+      // Filter users based on phone number
+      setState(() {
+        users = allUsers
+            .where((user) => user.phone.contains(query))
+            .toList(); // Filter users by phone number
+        _userNoResultMessage = users.isEmpty ? "ไม่พบผู้ใช้ที่ค้นหา" : '';
+      });
+    }
   }
 }

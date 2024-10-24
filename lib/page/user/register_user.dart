@@ -56,12 +56,11 @@ class _RegisterPageState extends State<RegisterPage> {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: const Color.fromARGB(255, 107, 41, 126),
-        // title: const Text(
-        //   'ลงทะเบียนผู้ใช้ทั่วไป',
-        //   style: TextStyle(
-        //       fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-        // ),
+        title: const Text(
+          'ลงทะเบียนผู้ใช้ทั่วไป',
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold,),
+        ),
       ),
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SingleChildScrollView(
@@ -102,7 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                             const Text(
-                              "ลงทะเบียนผู้ใช้ทั่วไป",
+                              "ลงทะเบียน",
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,

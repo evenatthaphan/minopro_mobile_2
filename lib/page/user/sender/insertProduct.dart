@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_minipro2/page/model/response/getUser_res.dart';
 import 'package:flutter_minipro2/page/user/sender/Senproduct.dart';
 import 'package:flutter_minipro2/page/user/sender/navbar_sender.dart';
 
 class insertProductPage extends StatefulWidget {
-  const insertProductPage({super.key});
+  final String id;
+  insertProductPage({super.key, required this.id});
 
   @override
   State<insertProductPage> createState() => _insertProductPageState();
 }
 
 class _insertProductPageState extends State<insertProductPage> {
+  
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -238,4 +242,5 @@ class _insertProductPageState extends State<insertProductPage> {
       ),
     );
   }
+  
 }
