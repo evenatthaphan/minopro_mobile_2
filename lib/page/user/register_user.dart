@@ -564,8 +564,8 @@ class _RegisterPageState extends State<RegisterPage> {
         }
 
         // เพิ่มข้อมูลไปยัง Firestore
-        // await users.doc(phone).set({
-        await users.add({
+        await users.doc(phone).set({
+        //await users.add({
           'name': name,
           'phone': phone,
           'address': address,
