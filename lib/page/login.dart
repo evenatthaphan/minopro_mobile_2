@@ -1,8 +1,16 @@
+import 'dart:developer';
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_minipro2/page/choose_register.dart';
+import 'package:flutter_minipro2/page/rider/Home.dart';
 import 'package:flutter_minipro2/page/user/HomepageUser.dart';
 import 'package:flutter_minipro2/page/user/register_user.dart';
 import 'package:flutter_minipro2/page/user/sender/HomePageSender.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_minipro2/config/shared/app_data.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,9 +20,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  bool _isPasswordVisible = false;
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController PhoneNoCtl = TextEditingController();
+  TextEditingController PasswordNoCtl = TextEditingController();
+
+  MapController mapController = MapController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,48 +33,43 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true, // อนุญาตให้เลื่อนเมื่อแป้นพิมพ์ขึ้นมา
       body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            SizedBox(
-              width: screenSize.width * 1, // ขยายความกว้างของ Card
-              height: screenSize.height * 0.4, // ขยายความสูงของ Card
-              child: Card(
-                color: const Color.fromARGB(255, 247, 182, 254),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 20),
-                  child: Stack(
-                    alignment: Alignment.center, // จัดให้อยู่ตรงกลาง
-                    children: [
-                      // วงกลมสีม่วงอยู่ด้านหลัง
-                      Container(
-                        width: screenSize.width * 0.6,
-                        height: screenSize.width *
-                            0.6, // ให้เป็นวงกลมโดยใช้ width และ height เท่ากัน
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.purple, // สีม่วง
+        child: Form(
+          key: _formKey, // ผูกฟอร์มกับ GlobalKey
+          child: Column(
+            children: [
+              SizedBox(
+                width: screenSize.width * 1, // ขยายความกว้างของ Card
+                height: screenSize.height * 0.4, // ขยายความสูงของ Card
+                child: Card(
+                  color: const Color.fromARGB(255, 247, 182, 254),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10, top: 20),
+                    child: Stack(
+                      alignment: Alignment.center, // จัดให้อยู่ตรงกลาง
+                      children: [
+                        // วงกลมสีม่วงอยู่ด้านหลัง
+                        Container(
+                          width: screenSize.width * 0.6,
+                          height: screenSize.width *
+                              0.6, // ให้เป็นวงกลมโดยใช้ width และ height เท่ากัน
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.purple, // สีม่วง
+                          ),
                         ),
-                      ),
-                      // รูปภาพอยู่ด้านหน้า
-                      SizedBox(
-                        child: Image.asset(
-                          'assets/images/login.png',
-                          width: screenSize.width * 0.8,
+                        // รูปภาพอยู่ด้านหน้า
+                        SizedBox(
+                          child: Image.asset(
+                            'assets/images/login.png',
+                            width: screenSize.width * 0.8,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: screenSize.height * 0.43,
-                bottom: MediaQuery.of(context)
-                    .viewInsets
-                    .bottom, // จัดการ padding ตามแป้นพิมพ์
-              ),
-              child: Column(
+              Column(
                 children: [
                   Padding(
                     padding: EdgeInsets.only(top: screenSize.height * 0.02),
@@ -89,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                             right: screenSize.width * 0.6,
                             top: screenSize.height * 0.03),
                         child: Text(
-                          'ชื่อผู้ใช้',
+                          'เบอร์โทรศัพท์',
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: screenSize.width * 0.04,
@@ -104,7 +109,8 @@ class _LoginPageState extends State<LoginPage> {
                             top: screenSize.height * 0.02),
                         child: TextField(
                           controller:
-                              _usernameController, // เชื่อมโยง controller กับ TextField
+                              PhoneNoCtl, // เชื่อมโยง controller กับ TextField
+                              keyboardType: TextInputType.phone,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -135,55 +141,57 @@ class _LoginPageState extends State<LoginPage> {
                             left: screenSize.width * 0.15,
                             right: screenSize.width * 0.15,
                             top: screenSize.height * 0.02),
-                        child: TextField(
-                          controller: _passwordController,
-                          obscureText:
-                              !_isPasswordVisible, // Toggle password visibility
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide(width: 1),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromRGBO(108, 3, 104, 1),
-                                  width: 2),
-                            ),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _isPasswordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _isPasswordVisible = !_isPasswordVisible;
-                                });
-                              },
+                        child: TextFormField(
+                        controller: PasswordNoCtl,
+                        obscureText: true,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'กรุณากรอกรหัสผ่าน';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: const Color.fromARGB(0, 255, 255, 255),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Colors.black,
+                              width: 1.0,
                             ),
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: screenSize.height * 0.05),
-                        child: SizedBox(
-                          width: screenSize.width *
-                              0.4, // ใช้ความกว้างของหน้าจอ 40%
-                          height: screenSize.height *
-                              0.06, // ใช้ความสูงของหน้าจอ 6%
-                          child: FilledButton(
-                            onPressed: () {
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        width: screenSize.width*0.5,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // ตรวจสอบฟอร์ม
+                            if (_formKey.currentState!.validate()) {
+                              // ถ้าฟอร์มผ่านการ validate
                               loginUser();
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all<Color>(
-                                  const Color.fromARGB(255, 124, 18, 148)),
-                            ),
-                            child: Text(
-                              'เข้าสู่ระบบ',
-                              style:
-                                  TextStyle(fontSize: screenSize.width * 0.04),
+                            } else {
+                              // แสดงข้อผิดพลาดถ้าฟอร์มไม่ผ่านการ validate
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Please fill all fields'),
+                                ),
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(255, 105, 14, 130),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10)), // มุมไม่โค้ง
                             ),
                           ),
+                          child: Text('เข้าสู่ระบบ', style: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontSize: screenSize.width * 0.04)),
                         ),
                       ),
                       Row(
@@ -214,20 +222,109 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  void loginUser() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const HomePageUser(),
+  void loginUser() async{
+   
+  String phone = PhoneNoCtl.text.trim();
+  String password = PasswordNoCtl.text.trim();
+
+  if (phone.isEmpty || password.isEmpty) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: const Text(
+            'Phone number and password cannot be empty or contain only spaces'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
+    return;
+  }
+
+  try {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('phone', isEqualTo: phone)
+        .where('password', isEqualTo: password)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      var userDoc = querySnapshot.docs.first.data() as Map<String, dynamic>;
+      String documentId = querySnapshot.docs.first.id;
+
+      String userType = userDoc['type'] ?? '';
+
+      if (userType == 'user') {
+        UserProfile userProfile = UserProfile(
+          id: documentId, // แก้ไขการเข้าถึงค่า 'id'
+          name: userDoc['name'] ?? '', // แก้ไขการเข้าถึงค่า 'name'
+          phone: userDoc['phone'] ?? '', // แก้ไขการเข้าถึงค่า 'phone'
+          address: userDoc['address'] ?? '', // แก้ไขการเข้าถึงค่า 'address'
+          image: userDoc['image'] ?? '', // แก้ไขการเข้าถึงค่า 'image'
+          latitude: double.tryParse(userDoc['latitude']?.toString() ?? '0.0') ?? 0.0,
+          longitude: double.tryParse(userDoc['longitude']?.toString() ?? '0.0') ?? 0.0,
+          type: userDoc['type'] ?? '',
+        );
+
+        Provider.of<AppData>(context, listen: false).updateUser(userProfile);
+
+        log('Document ID: $documentId');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePageUser(),
+          ),
+        );
+
+        log('This user is a user.');
+      } else if (userType == 'rider') {
+        RiderProfile riderProfile = RiderProfile(
+          id: documentId, // แก้ไขการเข้าถึงค่า 'id'
+          name: userDoc['name'] ?? '', // แก้ไขการเข้าถึงค่า 'name'
+          phone: userDoc['phone'] ?? '', // แก้ไขการเข้าถึงค่า 'phone'
+          image: userDoc['image'] ?? '', // แก้ไขการเข้าถึงค่า 'image'
+          vehicle: userDoc['vehicle'] ?? '', // แก้ไขการเข้าถึงค่า 'vehicle'
+          type: userDoc['type'] ?? '',
+        );
+
+        Provider.of<AppData>(context, listen: false).updateRider(riderProfile);
+
+        log('Document ID: $documentId');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePageRider(),
+          ),
+        );
+
+        log('This user is a rider.');
+      } else {
+        log('Unknown user type');
+      }
+    } else {
+      log('User not found or incorrect password');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('ไม่พบผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!'),
+        ),
+      );
+    }
+  } catch (error) {
+    log('Error: $error');
+  }
+
+
   }
 
   void register() {

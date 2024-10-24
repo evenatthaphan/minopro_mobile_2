@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_minipro2/page/rider/register_rider.dart';
 import 'package:flutter_minipro2/page/user/register_user.dart';
 
 class ChooseRegisterPage extends StatefulWidget {
@@ -146,5 +147,12 @@ class _ChooseRegisterPageState extends State<ChooseRegisterPage> {
     );
   }
 
-  void registerrider() {}
+  void registerrider() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const RegisterRiderPage(),
+      ),
+    );
+  }
 }

@@ -53,14 +53,15 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 107, 41, 126),
-        title: const Text(
-          'ลงทะเบียนผู้ใช้ทั่วไป',
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
+        // backgroundColor: const Color.fromARGB(255, 107, 41, 126),
+        // title: const Text(
+        //   'ลงทะเบียนผู้ใช้ทั่วไป',
+        //   style: TextStyle(
+        //       fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+        // ),
       ),
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SingleChildScrollView(
@@ -68,6 +69,54 @@ class _RegisterPageState extends State<RegisterPage> {
           key: _formKey, // ผูกฟอร์มกับ GlobalKey
           child: Column(
             children: [
+              SizedBox(
+              width: screenSize.width,
+              height: screenSize.height * 0.25,
+              child: Card(
+                color: const Color.fromARGB(255, 247, 182, 254),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: screenSize.height * 0.05,
+                    left: screenSize.width * 0.05,
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        child: Image.asset(
+                          'assets/images/user.png',
+                          width: screenSize.width * 0.3,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: screenSize.width * 0.05),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "ผู้ใช้ทั่วไป",
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.purple[400],
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Text(
+                              "ลงทะเบียนผู้ใช้ทั่วไป",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
               const SizedBox(height: 20),
               Center(
                 child: Card.outlined(
