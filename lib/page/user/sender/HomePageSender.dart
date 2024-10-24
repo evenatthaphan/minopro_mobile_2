@@ -86,7 +86,7 @@ class _HomePageSenderState extends State<HomePageSender> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: screenSize.width * 0.05),
+                  padding: EdgeInsets.only(left: screenSize.width * 0.05, right: screenSize.width*0.05),
                   child: Column(
                     children: [
                       const Row(
@@ -122,6 +122,7 @@ class _HomePageSenderState extends State<HomePageSender> {
                               itemBuilder: (context, index) {
                                 final user = users[index];
                                 return Card.outlined(
+                                  color: const Color.fromARGB(255, 248, 185, 237),
                                   margin: const EdgeInsets.symmetric(vertical: 8),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
